@@ -5,7 +5,8 @@ import Main from "./main.jsx";
 import Question from "./question.jsx";
 import Loading from "./loading.jsx";
 import Footer from "./footer.jsx";
-import NextButton from "./button.jsx";
+import { NextButton, FinishButton }from "./button.jsx";
+import FinishScreen from "./finshScreen.jsx";
 
 function reducer(state, action) {
   
@@ -22,6 +23,8 @@ function reducer(state, action) {
         index: isLastQuestion ? state.index : state.index + 1,
         status: isLastQuestion ? "finished" : state.status,
       };
+    case "finish":
+      return { ...state, status: "finished" };
     default:
       throw new Error("Unknown action type");
   }
@@ -64,12 +67,18 @@ function ReactQuiz() {
               index={index}
               maxQuestionIndex={maxQuestionIndex}
               totalPoints={totalPoints}
+              dispatch={dispatch}
             />
             <Footer>
-              <NextButton dispatch={dispatch} />
+              {index !== maxQuestionIndex - 1 ? (
+                <NextButton dispatch={dispatch}/>
+              ) : (
+                <FinishButton dispatch={dispatch}/>
+              )}
             </Footer>
         </Main>
       )}
+      {status === "finished" && <FinishScreen />}
     </div>
   );
 }
