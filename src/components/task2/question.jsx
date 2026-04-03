@@ -1,4 +1,4 @@
-function Question({ question, index, maxQuestionIndex, totalPoints }) {
+function Question({ question, index, maxQuestionIndex, totalPoints, dispatch }) {
   return (
     <div className="question w-200 p-4 flex flex-col gap-4">
       <DateList
